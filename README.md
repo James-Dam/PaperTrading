@@ -1,4 +1,8 @@
 <h1>PAPER TRADING PROJECT</h1>
+<h2>Workflows:</h2>
+
+[![Check Style](https://github.com/James-Dam/PaperTrading/actions/workflows/style.yaml/badge.svg)](https://github.com/James-Dam/PaperTrading/actions/workflows/style.yaml)
+[![Tests](https://github.com/James-Dam/PaperTrading/actions/workflows/unittest.yaml/badge.svg)](https://github.com/James-Dam/PaperTrading/actions/workflows/unittest.yaml)
 
 <h2>Dependencies:</h2>
 <h3>
