@@ -1,36 +1,78 @@
-import json
-import os
-import pandas as pd
-import requests
-import sqlalchemy as db
+import api
+import calculation
 
 def run():
-    # Get user input for stock ticker symbol
-    user_symbol = input("Enter a ticker symbol: ")
+    '''
+    Main Program
+    '''
+    # Print opening dialog
+    print('Hello!, welcome to the PaperTrading app, please start by entering a balance')
+    
+    # Balance for calculating unrealized profits/losses
+    balance = input('Enter starting balance: ')
+    if int(balance) < 0:
+        return "Balance cannot be below 0."
+    
+    # Boolean for while Loop
+    statement = True
+    
+    # Loop until user enters 0 to quit
+    print('Please pick one of the options below!')
+    while (statement):
+        print('Enter 0: Quit')
+        print('Enter 1: View last stock price')
+        print('Enter 2: View stock price at certain date')
+        print('Enter 3: Lookup company')
+        print('Enter 4: Calculate balance from buying & selling stocks')
+        user_input = input()
 
-    # Url of Financial Modeling Prep API
-    url = f'https://financialmodelingprep.com/api/v3/stock/full/real-time-price/{user_symbol}?'
+        # If user enters 0, quit
+        if user_input == '0':
+            print('Goodbye!')
+            break
 
-    # API key
-    KEY = os.environ.get('FINANCIAL_MODELING_PREP_KEY')
+        # Call API functions based on user input
+        if user_input == '1':
+            # Get user input for Ticker symbol
+            ticker_symbol = input("Enter a ticker symbol: ")
+            print(api.get_last_price(ticker_symbol))
 
-    # Test GET request of Financial Modeling Prep
-    params = {
-    'apikey': KEY
-    }
 
-    response = requests.get(url, params=params)
+        elif user_input == '2':
+            # Get user input for ticker symbol
+            ticker_symbol = input("Enter a ticker smybol: ")
 
-    data = response.json()
-    data = pd.DataFrame.from_dict(data)
+            # Get user input for date
+            date = input("Enter the date (YYYY-MM-DD) for which you wanted the price for: ")
 
-    engine = db.create_engine('sqlite:///stocks.db')
-    # Send SQLtable from data
-    data.to_sql('stocks', con=engine, if_exists='replace', index=False)
+            # Get user input for timeseries
+            timeseries = input("Enter timespan from date (1 if just the date above): ")
 
-    # Print data and table
-    print(data)
+            # Call and return price
+            print(api.get_last_price_from_date(ticker_symbol, date, timeseries))
 
-    with engine.connect() as connection:
-        query_result = connection.execute(db.text("SELECT lastSalePrice FROM stocks;")).fetchall()
-        print(pd.DataFrame(query_result))
+
+        elif user_input == '3':
+            # Get user input for company
+            company_name = input('Enter a company to find ticker symbol: ')
+            print(api.company_lookup(company_name))
+
+
+        # Call calculation function
+        elif user_input == '4':
+            # Get Ticker symbol
+            ticker_symbol = input("Enter ticker symbol: ")
+
+            # Get buying date
+            buy_date = input("Enter buying date: ")
+
+            # Get selling date
+            sell_date = input("Enter selling date: ")
+
+            balance = calculation.calculate_trade(balance, ticker_symbol, buy_date, sell_date)
+            print(f'You now have ${balance} if you bought {ticker_symbol} at {buy_date} and sold at {sell_date}.')
+        
+
+        # If no numbers listed are pressed, return message
+        else:
+            print('Please type one of the numbers listed above')
