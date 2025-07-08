@@ -52,8 +52,8 @@ def get_last_price_from_date(ticker_symbol: str, date: str, timeseries: int) -> 
     Given a ticker symbol, date, and timeseries, return historical data. If ticker symbol not found, return error message.
     '''
     # Check if timeseries > 0
-    if int(timeseries) < 1:
-        return "Timeseries must be greater than 0"
+    if int(timeseries) < 1 or int(timeseries) > 10:
+        return "Timeseries must be greater than 0 or less than 10."
 
     # Url of Financial Modeling Prep API
     url = f'https://financialmodelingprep.com/api/v3/historical-price-full/{ticker_symbol}?'
