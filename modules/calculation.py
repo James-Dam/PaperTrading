@@ -1,8 +1,10 @@
 import api
 
+
 def calculate_trade(balance: float, ticker_symbol: str, buy_date: str, sell_date: str) -> float:
     '''
-    Calculates new balance when buying and selling a certain stock on certain dates
+    Calculates new balance when buying and selling a certain stock
+    on certain dates
     '''
     # Collect prices
     buy_price = api.get_last_price_from_date(ticker_symbol, buy_date, 1)[0][0]
