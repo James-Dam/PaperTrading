@@ -7,13 +7,14 @@ def run():
     Main Program
     '''
     # Print opening dialog
-    print('Hello!, welcome to the PaperTrading app, \
-          please start by entering a balance')
+    print('Hello!, welcome to the PaperTrading app, please start by entering a balance')
 
     # Balance for calculating unrealized profits/losses
     balance = input('Enter starting balance: ')
     if int(balance) < 0:
         return "Balance cannot be below 0."
+    if not balance.isnumeric():
+        return "Please enter a number."
 
     # Boolean for while Loop
     statement = True
@@ -64,16 +65,16 @@ def run():
             ticker_symbol = input("Enter ticker symbol: ")
 
             # Get buying date
-            buy_date = input("Enter buying date: ")
+            buy_date = input("Enter buying date (YYYY-MM-DD): ")
 
             # Get selling date
-            sell_date = input("Enter selling date: ")
+            sell_date = input("Enter selling date (YYYY-MM-DD): ")
 
             balance = calculation.calculate_trade(balance, ticker_symbol,
                                                   buy_date, sell_date)
 
-            print(f'You now have ${balance} if you bought {ticker_symbol} at \
-                  {buy_date} and sold at {sell_date}.')
+            print(f'You now have ${balance[0]} if you bought {ticker_symbol} at {buy_date} and sold at {sell_date}.')
+            print(f'Your total net change in balance is {balance[1]}%.')
 
         # If no numbers listed are pressed, return message
         else:
