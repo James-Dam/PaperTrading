@@ -1,5 +1,26 @@
 {% extends "layout.html" %}
-{% block content %}
-    <h2>{{ subtitle }}</h2>
-    <p>{{ text }}</p>
-{% endblock content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PaperTrading</title>
+    </head>
+
+    <body>
+        
+        {% block content %}
+
+        <h1>Hello, {{ username }}</h1>
+        
+        <h1>Welcome to the PaperTrading Website!</h1>
+        <h2>Below are 4 options that you can choose from.</h2>
+        <br>
+        <h3><a href=../lookup_stock.html>Lookup Stock Price</h3>
+        <h3><a href=../lookup_historical.html>Lookup Historical Stock Price</h3>
+        <h3><a href=../lookup_company.html>Lookup Company</h3>
+        <h3><a href=../calculate_trade.html>Calculate Trade</h3>
+        
+        {% endblock content %}
+
+    </body>
+
+</html>
